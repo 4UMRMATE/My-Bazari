@@ -19,7 +19,7 @@ const Products = () => {
 
   return (
     <div className="Products">
-      {products && (
+      {products.length > 0 && (
         <Container className={classes.cardGrid} maxWidth="md">
           <Grid container spacing={4}>
             {products.map((product) => (
