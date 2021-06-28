@@ -7,6 +7,7 @@ import reducers from "./reducers";
 import { CssBaseline } from "@material-ui/core";
 
 import App from "./App";
+import "./App.css";
 
 const store = createStore(reducers, compose(applyMiddleware(thunck)));
 

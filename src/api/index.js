@@ -1,7 +1,10 @@
 import axios from "axios";
+require("dotenv").config();
 
-// "http://localhost:8080";
-const url = "https://my-bazari-api.herokuapp.com";
+const url =
+  process.env.REACT_APP_BUILD === "test"
+    ? "http://localhost:8080"
+    : "https://my-bazari-api.herokuapp.com";
 
 // const API = axios.create({ baseURL: "http://localhost:8080" });
 
@@ -18,7 +21,9 @@ const url = "https://my-bazari-api.herokuapp.com";
 // export const signIn = (formData) => API.post("/user/signin", formData);
 // export const signUp = (formData) => API.post("/user/signup", formData);
 
-export const fetchProducts = () => axios.get(`${url}/products`);
+export const fetchProducts = (name) => {
+  return axios.get(`${url}/products?name=${name ? name : ""}`);
+};
 export const fetchProduct = (id) => axios.get(`${url}/products/${id}`);
 export const fetchProfile = (id) => axios.get(`${url}/profiles/${id}`);
 

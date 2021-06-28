@@ -1,9 +1,9 @@
 import * as api from "../api";
 
-export const getProducts = () => async (dispatch) => {
+export const getProducts = (name) => async (dispatch) => {
   try {
     dispatch({ type: "LOADING" });
-    const { data } = await api.fetchProducts();
+    const { data } = await api.fetchProducts(name);
 
     dispatch({ type: "FETCH_ALL", payload: data });
   } catch (error) {

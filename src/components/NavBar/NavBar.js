@@ -13,13 +13,14 @@ import {
   Menu,
   CardMedia,
 } from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/Search";
+
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 
 import Categories from "../Categories/Categories";
+import SearchBar from "../SearchBar/SearchBar";
 
 import logo from "../../images/logo_transparent.png";
 import useStyles from "./styles";
@@ -151,20 +152,7 @@ const NavBar = () => {
             <CardMedia image={logo} style={{ width: "60px", height: "60px" }} />
             My Bazari
           </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ "aria-label": "search" }}
-              fullWidth={true}
-            />
-          </div>
+          <SearchBar />
           {profile ? (
             <div className={classes.sectionDesktop}>
               <IconButton aria-label="show 4 new mails" color="inherit">

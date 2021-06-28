@@ -3,6 +3,7 @@ import { Typography, Link, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   footer: {
+    color: "#c9d1d9",
     backgroundColor: "#03414D",
     padding: theme.spacing(6),
   },
@@ -10,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Copyright = () => {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography variant="body2" color="inherit" align="center">
       {"Copyright © "}
       <Link color="inherit" href="/">
         My Bazari
@@ -32,7 +33,7 @@ const Footer = () => {
       <Typography
         variant="subtitle1"
         align="center"
-        color="textSecondary"
+        color="inherit"
         component="p"
       >
         BETA Version
