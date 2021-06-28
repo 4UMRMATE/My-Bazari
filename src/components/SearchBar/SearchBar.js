@@ -4,7 +4,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import { useDispatch, useSelector } from "react-redux";
 
 import { fetchProducts } from "../../api";
-import { displayResults } from "../../actions/searchResults";
+import { hideResults, inputProduct } from "../../actions/searchResults";
 import Results from "./Results";
 import useStyles from "./styles";
 
@@ -12,18 +12,20 @@ const SearchBar = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const open = useSelector((state) => state.resultsDisplay);
+  const isHidden = useSelector((state) => state.searchResults.isHidden);
+  const searchInput = useSelector((state) => state.searchResults.input);
   const [results, setResults] = useState([]);
 
   const handleClick = () => {
-    dispatch(displayResults(true));
+    dispatch(hideResults(false));
   };
 
   const handleClickAway = () => {
-    dispatch(displayResults(false));
+    dispatch(hideResults(true));
   };
 
   const handleInput = async (e) => {
+    dispatch(inputProduct(e.target.value));
     if (e.target.value.length >= 3) {
       fetchProducts(e.target.value).then((res) => setResults(res.data));
     } else {
@@ -45,10 +47,11 @@ const SearchBar = () => {
           }}
           inputProps={{ "aria-label": "search" }}
           fullWidth={true}
+          value={searchInput}
           onClick={handleClick}
           onChange={handleInput}
         />
-        {open ? (
+        {!isHidden ? (
           <div className={classes.dropdown}>
             <Results results={results} />
           </div>

@@ -10,29 +10,23 @@ import { addProduct } from "../../actions/products";
 import { useDispatch } from "react-redux";
 import FileBase from "react-file-base64";
 
+const emptyForm = {
+  name: "",
+  images: [],
+  categories: [],
+  description: "",
+  contact: "",
+  price: "",
+  author: "",
+};
+
 const Form = () => {
   const dispatch = useDispatch();
-  const [productData, setProductData] = useState({
-    name: "",
-    images: [],
-    categories: [],
-    description: "",
-    contact: "",
-    price: "",
-    author: "",
-  });
+  const [productData, setProductData] = useState(emptyForm);
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setProductData({
-      name: "",
-      images: [],
-      categories: [],
-      description: "",
-      contact: "",
-      price: "",
-      author: "",
-    });
+    setProductData(emptyForm);
 
     dispatch(addProduct(productData));
   };

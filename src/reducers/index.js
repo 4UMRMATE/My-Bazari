@@ -5,7 +5,7 @@ import product from "./product";
 import loading from "./loading";
 import auth from "./auth";
 import profile from "./profile";
-import resultsDisplay from "./searchResults";
+import searchResults from "./searchResults";
 
 export default combineReducers({
   products: products,
@@ -13,5 +13,5 @@ export default combineReducers({
   loading: loading,
   auth: auth,
   profile: profile,
-  resultsDisplay: resultsDisplay,
+  searchResults: searchResults,
 });

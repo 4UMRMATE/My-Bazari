@@ -17,7 +17,7 @@ import Loader from "../../Loader/Loader";
 
 import emptyImage from "../../../images/empty-photo.jpg";
 import { getProduct } from "../../../actions/products";
-import { displayResults } from "../../../actions/searchResults";
+import { hideResults, inputProduct } from "../../../actions/searchResults";
 import { getDate, getPrice, getNumber } from "../../../helpers";
 
 import useStyles from "./styles";
@@ -29,7 +29,8 @@ const Product = ({ match }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(displayResults(false));
+    dispatch(inputProduct(""));
+    dispatch(hideResults(true));
     window.scrollTo(0, 0);
     dispatch(getProduct(id));
   }, [dispatch, id]);

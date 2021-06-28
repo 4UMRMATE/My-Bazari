@@ -1,3 +1,7 @@
-export const displayResults = (state) => (dispatch) => {
-  dispatch({ type: "DISPLAY_RESULTS", payload: state });
+export const hideResults = (state) => (dispatch) => {
+  dispatch({ type: "HIDE_RESULTS", payload: state });
+};
+
+export const inputProduct = (state) => (dispatch) => {
+  dispatch({ type: "SET_SEARCH_INPUT", payload: state });
 };

@@ -1,8 +1,15 @@
-export default (displayResults = false, action) => {
+const initialState = {
+  isHidden: true,
+  input: "",
+};
+
+export default (searchResults = initialState, action) => {
   switch (action.type) {
-    case "DISPLAY_RESULTS":
-      return action.payload;
+    case "HIDE_RESULTS":
+      return { ...searchResults, isHidden: action.payload };
+    case "SET_SEARCH_INPUT":
+      return { ...searchResults, input: action.payload };
     default:
-      return displayResults;
+      return searchResults;
   }
 };
