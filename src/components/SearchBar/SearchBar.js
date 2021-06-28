@@ -16,24 +16,18 @@ const SearchBar = () => {
   const [results, setResults] = useState([]);
 
   const handleClick = () => {
-    console.log("in");
     dispatch(displayResults(true));
   };
 
   const handleClickAway = () => {
-    console.log("out");
     dispatch(displayResults(false));
   };
 
   const handleInput = async (e) => {
-    console.log("e: ", e.target.value, e.target.value.length >= 3);
     if (e.target.value.length >= 3) {
-      // return await
       fetchProducts(e.target.value).then((res) => setResults(res.data));
     } else {
-      console.log("clear", results);
       setResults([]);
-      console.log("clear after", results);
     }
   };
 
