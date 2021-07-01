@@ -1,11 +1,14 @@
 import * as api from "../api";
 
-export const getProducts = (name) => async (dispatch) => {
+export const getProducts = (name, page) => async (dispatch) => {
   try {
     dispatch({ type: "LOADING" });
-    const { data } = await api.fetchProducts(name);
+    const { data } = await api.fetchProducts(name, page);
 
-    dispatch({ type: "FETCH_ALL", payload: data });
+    await Promise.all([
+      dispatch({ type: "FETCH_PRODUCTS", payload: data.data }),
+      dispatch({ type: "FETCH_PAGINATION", payload: data.meta.pagination }),
+    ]);
   } catch (error) {
     console.log(error.message);
   }
@@ -26,7 +29,7 @@ export const addProduct = (product) => async (dispatch) => {
   try {
     const { data } = await api.addProduct(product);
 
-    dispatch({ type: "CREATE", payload: data });
+    dispatch({ type: "ADD_PRODUCT", payload: data });
   } catch (error) {
     console.log(error.message);
   }

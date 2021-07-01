@@ -24,8 +24,6 @@ import useStyles from "./styles";
 
 const Product = ({ match }) => {
   let { id } = match.params;
-  console.log("id: ", id);
-
   const dispatch = useDispatch();
 
   useEffect(() => {

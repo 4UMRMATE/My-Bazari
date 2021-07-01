@@ -1,31 +1,28 @@
-import React from "react";
-import { MemoryRouter, Route } from "react-router";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { Pagination, PaginationItem } from "@material-ui/lab";
+import { useDispatch, useSelector } from "react-redux";
+import { changePage } from "../../actions/pagination";
 
-const Paginator = () => {
+const Paginator = ({ isHidden }) => {
+  const dispatch = useDispatch();
+  const pagination = useSelector((state) => state.pagination);
+
+  const styles = isHidden
+    ? { display: "none" }
+    : { display: "flex", justifyContent: "center", margin: "50px" };
+
+  const handleChange = (event, value) => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    dispatch(changePage(value));
+  };
+
   return (
-    <MemoryRouter initialEntries={["/inbox"]} initialIndex={0}>
-      <Route>
-        {({ location }) => {
-          const query = new URLSearchParams(location.search);
-          const page = parseInt(query.get("page") || "1", 10);
-          return (
-            <Pagination
-              page={page}
-              count={10}
-              renderItem={(item) => (
-                <PaginationItem
-                  component={Link}
-                  to={`/inbox${item.page === 1 ? "" : `?page=${item.page}`}`}
-                  {...item}
-                />
-              )}
-            />
-          );
-        }}
-      </Route>
-    </MemoryRouter>
+    <Pagination
+      style={styles}
+      count={pagination.pages}
+      page={pagination.page}
+      onChange={handleChange}
+    />
   );
 };
 

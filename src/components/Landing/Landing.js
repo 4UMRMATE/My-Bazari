@@ -1,30 +1,38 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../actions/products";
-import { useSelector } from "react-redux";
 import { Container } from "@material-ui/core";
+// import { Pagination } from "@material-ui/lab";
 
 import Products from ".././Products/Products";
-import Form from ".././Form/Form";
+import Paginator from "../Paginator/Paginator";
 
 const styles = {
   display: "flex",
-  placeContent: "center",
-  marginTop: "5vh",
+  justifyContent: "center",
+  alignItems: "center",
+  minHeight: "95vh",
 };
 
 const Landing = () => {
   const dispatch = useDispatch();
 
+  const pagination = useSelector((state) => state.pagination);
+  const loading = useSelector((state) => state.loading);
+
   useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch]);
+    if (pagination.page) {
+      dispatch(getProducts("", pagination.page));
+    } else {
+      dispatch(getProducts());
+    }
+  }, [dispatch, pagination.page]);
 
   return (
     <div className="Landing" style={styles}>
       <Container maxWidth="md">
         <Products />
-        <Form />
+        <Paginator isHidden={loading} />
       </Container>
     </div>
   );

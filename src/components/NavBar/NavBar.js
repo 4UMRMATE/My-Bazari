@@ -15,6 +15,7 @@ import {
 } from "@material-ui/core";
 
 import AccountCircle from "@material-ui/icons/AccountCircle";
+import AddBoxIcon from "@material-ui/icons/AddBox";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
@@ -155,7 +156,15 @@ const NavBar = () => {
           <SearchBar />
           {profile ? (
             <div className={classes.sectionDesktop}>
-              <IconButton aria-label="show 4 new mails" color="inherit">
+              <Button
+                component={Link}
+                to="/add-product"
+                variant="contained"
+                color="secondary"
+              >
+                <AddBoxIcon />
+              </Button>
+              {/* <IconButton aria-label="show 4 new mails" color="inherit">
                 <Badge badgeContent={4} color="secondary">
                   <MailIcon />
                 </Badge>
@@ -167,7 +176,7 @@ const NavBar = () => {
                 <Badge badgeContent={17} color="secondary">
                   <NotificationsIcon />
                 </Badge>
-              </IconButton>
+              </IconButton> */}
               <IconButton
                 edge="end"
                 aria-label="account of current user"

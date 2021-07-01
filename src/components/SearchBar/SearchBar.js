@@ -27,7 +27,10 @@ const SearchBar = () => {
   const handleInput = async (e) => {
     dispatch(inputProduct(e.target.value));
     if (e.target.value.length >= 3) {
-      fetchProducts(e.target.value).then((res) => setResults(res.data));
+      fetchProducts(e.target.value).then((res) => {
+        console.log(res);
+        setResults(res.data);
+      });
     } else {
       setResults([]);
     }

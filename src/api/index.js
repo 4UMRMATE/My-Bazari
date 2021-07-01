@@ -21,8 +21,8 @@ const url =
 // export const signIn = (formData) => API.post("/user/signin", formData);
 // export const signUp = (formData) => API.post("/user/signup", formData);
 
-export const fetchProducts = (name) => {
-  return axios.get(`${url}/products?name=${name ? name : ""}`);
+export const fetchProducts = (name, page) => {
+  return axios.get(`${url}/products?name=${name ? name : ""}&page=${page}`);
 };
 export const fetchProduct = (id) => axios.get(`${url}/products/${id}`);
 export const fetchProfile = (id) => axios.get(`${url}/profiles/${id}`);

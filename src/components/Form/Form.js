@@ -6,9 +6,11 @@ import {
   Button,
   Paper,
 } from "@material-ui/core";
-import { addProduct } from "../../actions/products";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import FileBase from "react-file-base64";
+
+import { addProduct } from "../../actions/products";
 
 const emptyForm = {
   name: "",
@@ -22,13 +24,17 @@ const emptyForm = {
 
 const Form = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
+
+  const profileId = useSelector((state) => state.profile.googleId);
   const [productData, setProductData] = useState(emptyForm);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setProductData(emptyForm);
-
+    setProductData({ ...emptyForm, author: profileId });
     dispatch(addProduct(productData));
+    history.push("/");
   };
 
   const uploadImages = (base64Data) => {
@@ -41,7 +47,10 @@ const Form = () => {
   };
 
   return (
-    <div className="Form" style={{ margin: "5rem 0" }}>
+    <div
+      className="Form"
+      style={{ display: "flex", alignItems: "center", minHeight: "95vh" }}
+    >
       <Container
         maxWidth="lg"
         style={{
@@ -109,17 +118,6 @@ const Form = () => {
               required
               onChange={(e) =>
                 setProductData({ ...productData, price: e.target.value })
-              }
-            />
-            <TextField
-              name="author"
-              variant="outlined"
-              label="author"
-              fullWidth
-              value={productData.author}
-              required
-              onChange={(e) =>
-                setProductData({ ...productData, author: e.target.value })
               }
             />
             <div style={{ margin: "2vh" }}>
