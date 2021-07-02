@@ -28,6 +28,18 @@ const Product = ({ match }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  const [profile, setProfile] = useState({});
+
+  useEffect(() => {
+    dispatch(inputProduct(""));
+    dispatch(hideResults(true));
+    window.scrollTo(0, 0);
+    dispatch(getProduct(id));
+  }, [dispatch, id]);
+
+  const product = useSelector((state) => state.product);
+  const loading = useSelector((state) => state.loading);
+
   let {
     images,
     name,
@@ -39,20 +51,11 @@ const Product = ({ match }) => {
     listedAt,
   } = product;
 
-  const [profile, setProfile] = useState({});
-
   useEffect(() => {
-    dispatch(inputProduct(""));
-    dispatch(hideResults(true));
-    window.scrollTo(0, 0);
-    dispatch(getProduct(id));
     fetchProfile(author).then((res) => {
       setProfile(res.data);
     });
-  }, [dispatch, id]);
-
-  const product = useSelector((state) => state.product);
-  const loading = useSelector((state) => state.loading);
+  }, [author]);
 
   if (loading) return <Loader />;
 
