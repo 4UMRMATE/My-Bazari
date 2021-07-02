@@ -25,20 +25,8 @@ import useStyles from "./styles";
 
 const Product = ({ match }) => {
   let { id } = match.params;
+  const classes = useStyles();
   const dispatch = useDispatch();
-
-  const [profile, setProfile] = useState({});
-
-  useEffect(() => {
-    dispatch(inputProduct(""));
-    dispatch(hideResults(true));
-    window.scrollTo(0, 0);
-    dispatch(getProduct(id));
-    fetchProfile(author).then((res) => setProfile(res.data));
-  }, [dispatch, id]);
-
-  const product = useSelector((state) => state.product);
-  const loading = useSelector((state) => state.loading);
 
   let {
     images,
@@ -50,7 +38,21 @@ const Product = ({ match }) => {
     author,
     listedAt,
   } = product;
-  const classes = useStyles();
+
+  const [profile, setProfile] = useState({});
+
+  useEffect(() => {
+    dispatch(inputProduct(""));
+    dispatch(hideResults(true));
+    window.scrollTo(0, 0);
+    dispatch(getProduct(id));
+    fetchProfile(author).then((res) => {
+      setProfile(res.data);
+    });
+  }, [dispatch, id]);
+
+  const product = useSelector((state) => state.product);
+  const loading = useSelector((state) => state.loading);
 
   if (loading) return <Loader />;
 
