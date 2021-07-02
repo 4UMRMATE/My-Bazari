@@ -73,7 +73,9 @@ const Product = ({ match }) => {
         minHeight: "95vh",
       }}
     >
-      <Breadcrumbs category={categories[0]} />
+      {categories && categories.length > 0 && (
+        <Breadcrumbs category={categories[0]} />
+      )}
       <Container maxWidth="md" style={{ marginTop: "1rem", minHeight: "50vh" }}>
         <Card
           className={classes.card}
