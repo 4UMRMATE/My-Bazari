@@ -26,14 +26,14 @@ const Form = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const profileId = useSelector((state) => state.profile.googleId);
+  const profileId = localStorage.getItem("profile").result.googleId;
   const [productData, setProductData] = useState(emptyForm);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setProductData({ ...emptyForm, author: profileId });
-    dispatch(addProduct(productData));
+    setProductData(emptyForm);
+    dispatch(addProduct({ ...productData, author: profileId }));
     history.push("/");
   };
 
