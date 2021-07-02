@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import {
   Container,
-  TextField,
   Typography,
   Button,
   Paper,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  FormControl,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import CreatableSelect from "react-select/creatable";
 import FileBase from "react-file-base64";
 
 import { addProduct } from "../../actions/products";
@@ -26,8 +30,21 @@ const Form = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const profileId = localStorage.getItem("profile").result.googleId;
+  const profileId = JSON.parse(localStorage.getItem("profile")).result.googleId;
   const [productData, setProductData] = useState(emptyForm);
+
+  const handleCategories = (categories) => {
+    let result = [];
+    categories.map((category) => {
+      if (!result.includes(category.value.toLowerCase())) {
+        result.push(category.value.toLowerCase());
+      }
+    });
+    setProductData({
+      ...productData,
+      categories: result,
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -59,73 +76,100 @@ const Form = () => {
           textAlign: "center",
         }}
       >
-        <Paper style={{ maxWidth: "500px" }}>
-          <form autoComplete="off" noValidate onSubmit={handleSubmit}>
+        <Paper
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            maxWidth: "500px",
+            width: "100%",
+          }}
+        >
+          <form
+            autoComplete="off"
+            onSubmit={handleSubmit}
+            style={{
+              display: "flex",
+              flexFlow: "column wrap",
+              width: "90%",
+              height: "750px",
+              justifyContent: "space-evenly",
+            }}
+          >
             <Typography variant="h6">Add Product</Typography>
-            <TextField
-              name="name"
-              variant="outlined"
-              label="name"
-              fullWidth
-              value={productData.name}
-              required
-              onChange={(e) =>
-                setProductData({ ...productData, name: e.target.value })
-              }
+            <FormControl fullWidth variant="outlined">
+              <InputLabel htmlFor="outlined-name">Name</InputLabel>
+              <OutlinedInput
+                id="outlined-name"
+                value={productData.name}
+                required
+                onChange={(e) =>
+                  setProductData({
+                    ...productData,
+                    name: e.target.value,
+                  })
+                }
+                labelWidth={45}
+              />
+            </FormControl>
+            <CreatableSelect
+              isClearable
+              isMulti
+              options={[]}
+              onChange={handleCategories}
             />
-            <TextField
-              name="categories"
-              variant="outlined"
-              label="categories"
-              fullWidth
-              value={productData.categories}
-              required
-              onChange={(e) =>
-                setProductData({
-                  ...productData,
-                  categories: e.target.value.split(","),
-                })
-              }
-            />
-            <TextField
-              name="description"
-              variant="outlined"
-              label="description"
-              fullWidth
-              value={productData.description}
-              required
-              onChange={(e) =>
-                setProductData({ ...productData, description: e.target.value })
-              }
-            />
-            <TextField
-              name="contact"
-              variant="outlined"
-              label="contact"
-              fullWidth
-              value={productData.contact}
-              required
-              onChange={(e) =>
-                setProductData({ ...productData, contact: e.target.value })
-              }
-            />
-            <TextField
-              name="price"
-              variant="outlined"
-              label="price"
-              fullWidth
-              value={productData.price}
-              required
-              onChange={(e) =>
-                setProductData({ ...productData, price: e.target.value })
-              }
-            />
+            <FormControl fullWidth variant="outlined">
+              <InputLabel htmlFor="outlined-description">
+                Description
+              </InputLabel>
+              <OutlinedInput
+                id="outlined-description"
+                value={productData.description}
+                required
+                onChange={(e) =>
+                  setProductData({
+                    ...productData,
+                    description: e.target.value,
+                  })
+                }
+                labelWidth={80}
+              />
+            </FormControl>
+            <FormControl fullWidth variant="outlined">
+              <InputLabel htmlFor="outlined-contact">Phone Number</InputLabel>
+              <OutlinedInput
+                id="outlined-contact"
+                value={productData.contact}
+                required
+                onChange={(e) =>
+                  setProductData({ ...productData, contact: e.target.value })
+                }
+                labelWidth={110}
+              />
+            </FormControl>
+            <FormControl fullWidth variant="outlined">
+              <InputLabel htmlFor="outlined-adornment-amount">Price</InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-amount"
+                type="number"
+                value={productData.price}
+                required
+                placeholder="0.00"
+                onChange={(e) =>
+                  setProductData({ ...productData, price: e.target.value })
+                }
+                startAdornment={
+                  <InputAdornment position="start">$</InputAdornment>
+                }
+                labelWidth={35}
+              />
+            </FormControl>
             <div style={{ margin: "2vh" }}>
               <FileBase
                 key={productData.name}
                 type="file"
                 multiple={true}
                 onDone={uploadImages}
+                style={{ backgroundColor: "red" }}
               />
             </div>
             <Button

@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   Button,
   Card,
-  CardActions,
   CardContent,
   CardMedia,
   Typography,
@@ -19,6 +19,7 @@ import emptyImage from "../../../images/empty-photo.jpg";
 import { getProduct } from "../../../actions/products";
 import { hideResults, inputProduct } from "../../../actions/searchResults";
 import { getDate, getPrice, getNumber } from "../../../helpers";
+import { fetchProfile } from "../../../api";
 
 import useStyles from "./styles";
 
@@ -26,18 +27,29 @@ const Product = ({ match }) => {
   let { id } = match.params;
   const dispatch = useDispatch();
 
+  const [profile, setProfile] = useState({});
+
   useEffect(() => {
     dispatch(inputProduct(""));
     dispatch(hideResults(true));
     window.scrollTo(0, 0);
     dispatch(getProduct(id));
+    fetchProfile(author).then((res) => setProfile(res.data));
   }, [dispatch, id]);
 
   const product = useSelector((state) => state.product);
   const loading = useSelector((state) => state.loading);
 
-  let { images, name, contact, price, listedAt, viewCount, description } =
-    product;
+  let {
+    images,
+    name,
+    description,
+    price,
+    contact,
+    viewCount,
+    author,
+    listedAt,
+  } = product;
   const classes = useStyles();
 
   if (loading) return <Loader />;
@@ -47,7 +59,7 @@ const Product = ({ match }) => {
       className="ProductMain"
       style={{ display: "flex", alignItems: "center", minHeight: "95vh" }}
     >
-      <Container maxWidth="md" style={{ height: "50vh" }}>
+      <Container maxWidth="md" style={{ minHeight: "50vh" }}>
         <Card
           className={classes.card}
           style={{ diplay: "flex", flexFlow: "row wrap" }}
@@ -137,18 +149,52 @@ const Product = ({ match }) => {
                 </a>
               </Typography>
             </CardContent>
-            <CardActions
-              style={{ display: "flex", justifyContent: "space-around" }}
+          </Paper>
+        </Card>
+        <Card>
+          {profile.length > 0 && (
+            <Paper
+              style={{
+                display: "flex",
+                flexFlow: "row wrap",
+                justifyContent: "space-around",
+                alignItems: "center",
+                width: "100%",
+                height: "100px",
+              }}
             >
               <Button size="small" color="primary">
                 <VisibilityIcon />
                 {viewCount}
               </Button>
+              <Link
+                to={`/profile/${profile[0].googleId}`}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-around",
+                  alignItems: "center",
+                  width: "10rem",
+                }}
+              >
+                <CardMedia
+                  className={classes.cardMedia}
+                  image={profile[0].imageUrl}
+                  title="Image title"
+                  style={{
+                    width: "50px",
+                    height: "50px",
+                    marginBottom: "0",
+                    borderRadius: "15px",
+                    paddingTop: "0",
+                  }}
+                />
+                <Typography variant="h6">{profile[0].givenName}</Typography>
+              </Link>
               <Button size="small" color="primary">
                 {getDate(listedAt)}
               </Button>
-            </CardActions>
-          </Paper>
+            </Paper>
+          )}
         </Card>
       </Container>
     </div>

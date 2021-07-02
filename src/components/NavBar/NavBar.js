@@ -40,6 +40,10 @@ const NavBar = () => {
     JSON.parse(localStorage.getItem("profile"))
   );
 
+  const handleProductAdd = () => {
+    history.push("/add-product");
+  };
+
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -156,14 +160,18 @@ const NavBar = () => {
           <SearchBar />
           {profile ? (
             <div className={classes.sectionDesktop}>
-              <Button
-                component={Link}
-                to="/add-product"
-                variant="contained"
-                color="secondary"
+              <IconButton
+                // component={Link}
+                // to="/add-product"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                color="inherit"
+                onClick={handleProductAdd}
               >
                 <AddBoxIcon />
-              </Button>
+              </IconButton>
               {/* <IconButton aria-label="show 4 new mails" color="inherit">
                 <Badge badgeContent={4} color="secondary">
                   <MailIcon />
