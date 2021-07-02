@@ -15,6 +15,8 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 import PhoneAndroidIcon from "@material-ui/icons/PhoneAndroid";
 import Loader from "../../Loader/Loader";
 
+import Breadcrumbs from "../../Breadcrumbs/Breadcrumbs";
+
 import emptyImage from "../../../images/empty-photo.jpg";
 import { getProduct } from "../../../actions/products";
 import { hideResults, inputProduct } from "../../../actions/searchResults";
@@ -45,6 +47,7 @@ const Product = ({ match }) => {
     name,
     description,
     price,
+    categories,
     contact,
     viewCount,
     author,
@@ -62,9 +65,16 @@ const Product = ({ match }) => {
   return (
     <div
       className="ProductMain"
-      style={{ display: "flex", alignItems: "center", minHeight: "95vh" }}
+      style={{
+        display: "flex",
+        flexFlow: "column wrap",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "95vh",
+      }}
     >
-      <Container maxWidth="md" style={{ minHeight: "50vh" }}>
+      <Breadcrumbs category={categories[0]} />
+      <Container maxWidth="md" style={{ marginTop: "1rem", minHeight: "50vh" }}>
         <Card
           className={classes.card}
           style={{ diplay: "flex", flexFlow: "row wrap" }}
