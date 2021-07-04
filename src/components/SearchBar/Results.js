@@ -26,9 +26,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AlignItemsList({ results }) {
   const classes = useStyles();
-  console.log("p", results);
 
-  // if (!results.length) return <p>Result will appear here...</p>;
+  if (!results.length) return <p>Result will appear here...</p>;
 
   return (
     <>

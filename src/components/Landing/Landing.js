@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../actions/products";
 import { Container } from "@material-ui/core";
-// import { Pagination } from "@material-ui/lab";
 
 import Products from ".././Products/Products";
 import Paginator from "../Paginator/Paginator";
