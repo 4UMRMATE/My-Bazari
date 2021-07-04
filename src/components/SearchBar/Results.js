@@ -26,48 +26,55 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AlignItemsList({ results }) {
   const classes = useStyles();
+  console.log("p", results);
 
-  if (!results.length) return <p>Result will appear here...</p>;
+  // if (!results.length) return <p>Result will appear here...</p>;
 
   return (
-    <List className={classes.root}>
-      {results.map((result) => {
-        return (
-          <Link
-            key={result._id}
-            to={`/product/${result._id}`}
-            style={{ textDecoration: "none" }}
-          >
-            <ListItem alignItems="flex-start">
-              <ListItemAvatar>
-                <Avatar
-                  alt="Remy Sharp"
-                  src={result.images.length ? result.images[0] : emptyImage}
-                />
-              </ListItemAvatar>
-              <ListItemText
-                primary={result.name}
-                secondary={
-                  <React.Fragment>
-                    {result.categories.length && (
-                      <Typography
-                        component="span"
-                        variant="body2"
-                        className={classes.inline}
-                        color="textPrimary"
-                      >
-                        {result.categories[0]}{" "}
-                      </Typography>
-                    )}
-                    {getPrice(result.price)}
-                  </React.Fragment>
-                }
-              />
-            </ListItem>
-            {results.length > 1 && <Divider variant="inset" component="li" />}
-          </Link>
-        );
-      })}
-    </List>
+    <>
+      {results && results.length > 0 && (
+        <List className={classes.root}>
+          {results.map((result) => {
+            return (
+              <Link
+                key={result._id}
+                to={`/product/${result._id}`}
+                style={{ textDecoration: "none" }}
+              >
+                <ListItem alignItems="flex-start">
+                  <ListItemAvatar>
+                    <Avatar
+                      alt="Remy Sharp"
+                      src={result.images.length ? result.images[0] : emptyImage}
+                    />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={result.name}
+                    secondary={
+                      <React.Fragment>
+                        {result.categories.length && (
+                          <Typography
+                            component="span"
+                            variant="body2"
+                            className={classes.inline}
+                            color="textPrimary"
+                          >
+                            {result.categories[0]}{" "}
+                          </Typography>
+                        )}
+                        {getPrice(result.price)}
+                      </React.Fragment>
+                    }
+                  />
+                </ListItem>
+                {results.length > 1 && (
+                  <Divider variant="inset" component="li" />
+                )}
+              </Link>
+            );
+          })}
+        </List>
+      )}
+    </>
   );
 }
